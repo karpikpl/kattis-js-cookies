@@ -5,33 +5,40 @@
 function solution(toPrint, toRead) {
 
     const startAll = new Date();
-    const input = readline().split(' ');
-    const dice1 = parseInt(input[0]);
-    const dice2 = parseInt(input[1]);
+    let input;
+    let cookies = [];
+    let sorted = true;
 
-    log(`Parsed input dice 1: ${dice1} dice 2: ${dice2}`);
+    while (input = readline()) {
 
-    const results = {};
-    let maxProb = 0;
+        if (input == '#') {
+            // cookie out;
+            // odd - (c+1)/2
+            // even - (c/2)+1
+            if (!sorted) {
+                cookies = cookies.sort();
+                sorted = true;
+                log(`not sorted - sorting... ${cookies}`);
+            }
 
-    for (let i = 1; i <= dice1; i++)
-        for (let j = 1; j <= dice2; j++) {
-            const prob = (1 / dice1) + (1 / dice2);
-            const sum = i + j;
+            if (cookies.length % 2 === 0) {
+                const index = cookies.length / 2 + 1 - 1;
+                const cookie = cookies.splice(index, 1)[0];
+                print(cookie);
+                log(`out ${cookie} from index [${index}] - cookies after: ${cookies}`)
+            } else {
+                const index = (cookies.length + 1) / 2 - 1;
+                const cookie = cookies.splice(index, 1)[0];
+                print(cookie);
+                log(`out ${cookie} from index [${index}] - cookies after: ${cookies}`)
+            }
 
-            results[sum] = (results[sum] || 0) + prob;
+        } else {
+            cookies.push(parseInt(input));
+            sorted = false;
+            log(cookies);
         }
-
-    let sums = [];
-
-    Object.keys(results).forEach((o) => sums.push({prob: results[o], sum: o}));
-
-    sums = sums.sort((a, b) => b.prob - a.prob);
-    const max = sums[0].prob;
-
-    //log(sums);
-
-    sums.filter(s => s.prob == max).sort((a, b) => a.sum - b.sum).forEach(s => print(s.sum));
+    }
 
     log(`Solved ALL in ${new Date() - startAll}`);
 }
@@ -60,7 +67,10 @@ if (typeof process !== 'undefined' && process.argv[2] === 'i') {
     const Readline = require('readline');
     const input = [];
 
-    const inputProcessor = Readline.createInterface({input: process.stdin, output: process.stdout});
+    const inputProcessor = Readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
 
     inputProcessor.on('line', (line) => {
 

@@ -18,28 +18,41 @@ describe('Solution', function() {
 
     describe('program', function() {
 
-        [
-            {
-                input: ['6 6'],
-                result: [7]
-            }, {
-                input: ['6 4'],
-                result: ['5', '6', '7']
-            }, {
-                input: ['12 20'],
-                result: [
-                    '13',
-                    '14',
-                    '15',
-                    '16',
-                    '17',
-                    '18',
-                    '19',
-                    '20',
-                    '21'
-                ]
-            }
-        ].forEach((testCase) => {
+        [{
+            input: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '#',
+                '#',
+                '#',
+                '#'
+            ],
+            result: [
+                '3',
+                '2',
+                '4',
+                '1'
+            ]
+        },{
+            input: [
+                '1',
+                '#',
+                '2',
+                '#',
+                '3',
+                '#',
+                '4',
+                '#'
+            ],
+            result: [
+                '1',
+                '2',
+                '3',
+                '4'
+            ]
+        }].forEach((testCase) => {
 
             it('should solve for ' + testCase.input, function() {
 
