@@ -233,16 +233,38 @@ function LinkedList() {
     }
 
     this.remove = () => {
-        if (!this.middle.next) {
-            // last
+
+        const middleVal = this.middle.value;
+
+        if (this.middle.next) {
+            // not last
             this.middle.next.prev = this.middle.prev;
         }
 
-        if (!this.middle.prev) {
+        if (this.middle.prev) {
+
+            // not first
             this.middle.prev.next = this.middle.next;
         }
 
-        this.middle = this.middle.next;
+        this.count--;
+
+        // move middle
+        if (this.middleIndex != Math.floor(this.count / 2 + 1)) {
+
+            if (this.middleIndex < Math.floor(this.count / 2 + 1)) {
+
+                //log(`Moving middle right from ${this.middle.value} (I:${this.middleIndex}) to ${this.middle.next.value} (I:${this.middleIndex + 1})`);
+                this.middle = this.middle.next;
+                this.middleIndex++;
+            } else {
+                //log(`Moving middle left from ${this.middle.value} (I:${this.middleIndex}) to ${this.middle.prev.value} (I:${this.middleIndex - 1})`);
+                this.middle = this.middle.prev;
+                this.middleIndex--;
+            }
+        }
+
+        return middleVal;
     }
 
     this.toString = () => {

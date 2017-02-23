@@ -186,4 +186,45 @@ describe('linked list tests', function() {
         // Assert
         assert.deepEqual(linkedList.toArray(), [0,1,2,5,6,6,6,7,9,9]);
     })
+
+    it.only('should remove middle from 1,2,7,5', function() {
+
+        // Arrange
+        let linkedList = new Index.LinkedList;
+
+        // Act
+        linkedList.add(2);
+        linkedList.add(1);
+        linkedList.add(7);
+        linkedList.add(5);
+        const poped = linkedList.remove();
+
+        // Assert
+        assert.equal(poped, 5);
+        assert.equal(linkedList.middle.value, 2, 'middle should be moved to 2');
+        assert.deepEqual(linkedList.toArray(), [1,2,7]);
+    })
+
+    it.only('should remove middle from 1,2,7,5', function() {
+
+        // Arrange
+        let linkedList = new Index.LinkedList;
+
+        // Act
+        linkedList.add(2);
+        linkedList.add(1);
+        linkedList.add(7);
+        linkedList.add(5);
+        console.log(`before: ${linkedList}`);
+        const poped1 = linkedList.remove();
+        console.log(`after removal of ${poped1} middle is:${linkedList.middle}: \n${linkedList}`);
+        const poped2 = linkedList.remove();
+        console.log(`after removal of ${poped2} middle is:${linkedList.middle}: \n${linkedList}`);
+
+        // Assert
+        assert.equal(poped1, 5);
+        assert.equal(poped2, 2);
+        assert.equal(linkedList.middle.value, 7, 'middle should be moved to 7');
+        assert.deepEqual(linkedList.toArray(), [1,7]);
+    })
 });
