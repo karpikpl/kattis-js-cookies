@@ -1,5 +1,5 @@
 # About
-ES2016 wrapper for https://open.kattis.com/ platform.
+Solution for `Cookie Selection` problem - https://open.kattis.com/problems/cookieselection using ES2016 wrapper for https://open.kattis.com/ platform.
 
 ## Usage
 Put your solution inside `solution()` method. Add tests in `test/index.js`.

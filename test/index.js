@@ -105,9 +105,9 @@ describe('Solution', function() {
     });
 });
 
-describe.only('linked list', function() {
+describe('linked list tests', function() {
 
-    it('should grow', function() {
+    it('should grow for 0,1,2,3', function() {
 
         // Arrange
         let linkedList = new Index.LinkedList;
@@ -119,6 +119,71 @@ describe.only('linked list', function() {
         linkedList.add(3);
 
         // Assert
-        assert.deepEqual(linkedList.toString(), '0,1,2,3');
+        assert.deepEqual(linkedList.toArray(), [0,1,2,3]);
     })
-})
+
+    it('should grow for 3,2,1,0', function() {
+
+        // Arrange
+        let linkedList = new Index.LinkedList;
+
+        // Act
+        linkedList.add(3);
+        linkedList.add(2);
+        linkedList.add(1);
+        linkedList.add(0);
+
+        // Assert
+        assert.deepEqual(linkedList.toArray(), [0,1,2,3]);
+    })
+
+    it('should grow for 2,1,3', function() {
+
+        // Arrange
+        let linkedList = new Index.LinkedList;
+
+        // Act
+        linkedList.add(2);
+        linkedList.add(1);
+        linkedList.add(3);
+
+        // Assert
+        assert.deepEqual(linkedList.toArray(), [1,2,3]);
+    })
+
+    it('should grow for 1,2,7,5', function() {
+
+        // Arrange
+        let linkedList = new Index.LinkedList;
+
+        // Act
+        linkedList.add(2);
+        linkedList.add(1);
+        linkedList.add(7);
+        linkedList.add(5);
+
+        // Assert
+        assert.deepEqual(linkedList.toArray(), [1,2,5,7]);
+    })
+
+    it('should grow for 0,1,2,5,6,6,6,7,9,9', function() {
+
+        // Arrange
+        let linkedList = new Index.LinkedList;
+
+        // Act
+        linkedList.add(2);
+        linkedList.add(1);
+        linkedList.add(7);
+        linkedList.add(5);
+        linkedList.add(6);
+        linkedList.add(6);
+        linkedList.add(6);
+        linkedList.add(0);
+        linkedList.add(9);
+        linkedList.add(9);
+
+        // Assert
+        assert.deepEqual(linkedList.toArray(), [0,1,2,5,6,6,6,7,9,9]);
+    })
+});
