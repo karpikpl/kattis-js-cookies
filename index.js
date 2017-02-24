@@ -5,126 +5,30 @@
 function solution(toPrint, toRead) {
 
     const startAll = new Date();
-    let input;
-    let cookies = [];
-    let sorted = true;
-    let waitlist = [];
+    let cookie;
     let progress = 0;
+    const linkedList = new LinkedList();
 
-    while (input = readline()) {
+    while (cookie = readline()) {
 
         progress++;
 
         if (progress % 50000 === 0) {
-            console.log(`Processed ${progress} in ${new Date() - startAll}`);
+            log(`Processed ${progress} in ${new Date() - startAll}`);
         }
 
-        if (input == '#') {
+        if (cookie == '#') {
 
-            // cookie out;
-            // odd - (c+1)/2
-            // even - (c/2)+1
-            // if (!sorted) {
-            //     cookies = cookies.sort();
-            //     sorted = true;
-            //     log(`not sorted - sorting... ${cookies}`);
-            // }
-            if (waitlist.length > 0) {
-                if (waitlist.length > cookies.length) {
-                    cookies = cookies.concat(waitlist);
-                    log('sorting');
-                    waitlist = [];
-                    cookies = cookies.sort();
-                } else {
-                    waitlist.forEach(c => {
-                        binaryInsert(c, cookies);
-                    })
-                    waitlist = [];
-                }
-            }
-
-            if (cookies.length % 2 === 0) {
-                const index = cookies.length / 2 + 1 - 1;
-                const cookie = cookies.splice(index, 1)[0];
-                print(cookie);
-                log(`out ${cookie} from index [${index}] - cookies after: ${cookies}`)
-            } else {
-                const index = (cookies.length + 1) / 2 - 1;
-                const cookie = cookies.splice(index, 1)[0];
-                print(cookie);
-                log(`out ${cookie} from index [${index}] - cookies after: ${cookies}`)
-            }
-
+            const removed = linkedList.remove();
+            print(removed);
+            log(`out ${removed}`);
         } else {
 
-            const cookie = input;
-
-            // if (cookies.length === 0 || cookie >= cookies[cookies.length - 1]) {
-            //     cookies.push(input);
-            // }
-            // else
-            {
-                log('adding to waitlist...');
-                const cookie = input;
-
-                if (cookies.length === 0) {
-                    cookies.push(cookie);
-                } else {
-                    waitlist.push(cookie);
-                }
-
-                //binaryInsert(cookie, cookies);
-            }
-
-            sorted = true;
-            //log(cookies);
+            linkedList.add(parseInt(cookie));
         }
     }
 
-    console.log(`Solved ALL in ${new Date() - startAll}`);
-}
-
-function binaryInsert(value, array, startVal, endVal) {
-
-    var length = array.length;
-    var start = typeof(startVal) != 'undefined'
-        ? startVal
-        : 0;
-    var end = typeof(endVal) != 'undefined'
-        ? endVal
-        : length - 1; //!! endVal could be 0 don't use || syntax
-    var m = start + Math.floor((end - start) / 2);
-
-    if (length == 0) {
-        array.push(value);
-        return;
-    }
-
-    if (value >= array[end]) {
-        array.splice(end + 1, 0, value);
-        return;
-    }
-
-    if (value <= array[start]) { //!!
-        array.splice(start, 0, value);
-        return;
-    }
-
-    if (start >= end) {
-        return;
-    }
-
-    if (value < array[m]) {
-        binaryInsert(value, array, start, m - 1);
-        return;
-    }
-
-    if (value > array[m]) {
-        binaryInsert(value, array, m + 1, end);
-        return;
-    }
-
-    //we don't insert duplicates
+    log(`Solved ALL in ${new Date() - startAll}`);
 }
 
 function LinkedList() {
@@ -249,7 +153,7 @@ function LinkedList() {
 
         this.count--;
 
-        // move middle
+        // move middle when index changes
         if (this.middleIndex != Math.floor(this.count / 2 + 1)) {
 
             if (this.middleIndex < Math.floor(this.count / 2 + 1)) {
@@ -262,6 +166,8 @@ function LinkedList() {
                 this.middle = this.middle.prev;
                 this.middleIndex--;
             }
+        } else {
+            this.middle = this.middle.next;
         }
 
         return middleVal;

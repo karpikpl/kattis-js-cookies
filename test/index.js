@@ -8,10 +8,11 @@ function testSolution(input) {
 
     const max = 600000;
     const result = new Array(max);
-    let current = 0;
+    let currentInput = 0;
+    let currentResult = 0;
 
-    Index.init((ans) => result.push(ans), () => {
-        return input[current++];
+    Index.init((ans) => result[currentResult++] = ans, () => {
+        return input[currentInput++];
     });
     Index.solution();
 
@@ -22,41 +23,33 @@ describe('Solution', function() {
 
     describe('program', function() {
 
-        [{
-            input: [
-                '1',
-                '2',
-                '3',
-                '4',
-                '#',
-                '#',
-                '#',
-                '#'
-            ],
-            result: [
-                '3',
-                '2',
-                '4',
-                '1'
-            ]
-        }, {
-            input: [
-                '1',
-                '#',
-                '2',
-                '#',
-                '3',
-                '#',
-                '4',
-                '#'
-            ],
-            result: [
-                '1',
-                '2',
-                '3',
-                '4'
-            ]
-        }].forEach((testCase) => {
+        [
+            {
+                input: [
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '#',
+                    '#',
+                    '#',
+                    '#'
+                ],
+                result: ['3', '2', '4', '1']
+            }, {
+                input: [
+                    '1',
+                    '#',
+                    '2',
+                    '#',
+                    '3',
+                    '#',
+                    '4',
+                    '#'
+                ],
+                result: ['1', '2', '3', '4']
+            }
+        ].forEach((testCase) => {
 
             it('should solve for ' + testCase.input, function() {
 
@@ -78,7 +71,7 @@ describe('Solution', function() {
             return Math.floor(Math.random() * (max - min)) + min;
         }
 
-        it.skip('should solve for large input', function() {
+        it.only('should solve for large input', function() {
 
             // Arrange
             const input = [];
@@ -119,7 +112,7 @@ describe('linked list tests', function() {
         linkedList.add(3);
 
         // Assert
-        assert.deepEqual(linkedList.toArray(), [0,1,2,3]);
+        assert.deepEqual(linkedList.toArray(), [0, 1, 2, 3]);
     })
 
     it('should grow for 3,2,1,0', function() {
@@ -134,7 +127,7 @@ describe('linked list tests', function() {
         linkedList.add(0);
 
         // Assert
-        assert.deepEqual(linkedList.toArray(), [0,1,2,3]);
+        assert.deepEqual(linkedList.toArray(), [0, 1, 2, 3]);
     })
 
     it('should grow for 2,1,3', function() {
@@ -148,7 +141,7 @@ describe('linked list tests', function() {
         linkedList.add(3);
 
         // Assert
-        assert.deepEqual(linkedList.toArray(), [1,2,3]);
+        assert.deepEqual(linkedList.toArray(), [1, 2, 3]);
     })
 
     it('should grow for 1,2,7,5', function() {
@@ -163,7 +156,7 @@ describe('linked list tests', function() {
         linkedList.add(5);
 
         // Assert
-        assert.deepEqual(linkedList.toArray(), [1,2,5,7]);
+        assert.deepEqual(linkedList.toArray(), [1, 2, 5, 7]);
     })
 
     it('should grow for 0,1,2,5,6,6,6,7,9,9', function() {
@@ -184,10 +177,21 @@ describe('linked list tests', function() {
         linkedList.add(9);
 
         // Assert
-        assert.deepEqual(linkedList.toArray(), [0,1,2,5,6,6,6,7,9,9]);
+        assert.deepEqual(linkedList.toArray(), [
+            0,
+            1,
+            2,
+            5,
+            6,
+            6,
+            6,
+            7,
+            9,
+            9
+        ]);
     })
 
-    it.only('should remove middle from 1,2,7,5', function() {
+    it('should remove middle from 1,2,7,5', function() {
 
         // Arrange
         let linkedList = new Index.LinkedList;
@@ -202,10 +206,10 @@ describe('linked list tests', function() {
         // Assert
         assert.equal(poped, 5);
         assert.equal(linkedList.middle.value, 2, 'middle should be moved to 2');
-        assert.deepEqual(linkedList.toArray(), [1,2,7]);
+        assert.deepEqual(linkedList.toArray(), [1, 2, 7]);
     })
 
-    it.only('should remove middle from 1,2,7,5', function() {
+    it('should remove middle from 1,2,7,5', function() {
 
         // Arrange
         let linkedList = new Index.LinkedList;
@@ -215,16 +219,13 @@ describe('linked list tests', function() {
         linkedList.add(1);
         linkedList.add(7);
         linkedList.add(5);
-        console.log(`before: ${linkedList}`);
         const poped1 = linkedList.remove();
-        console.log(`after removal of ${poped1} middle is:${linkedList.middle}: \n${linkedList}`);
         const poped2 = linkedList.remove();
-        console.log(`after removal of ${poped2} middle is:${linkedList.middle}: \n${linkedList}`);
 
         // Assert
         assert.equal(poped1, 5);
         assert.equal(poped2, 2);
         assert.equal(linkedList.middle.value, 7, 'middle should be moved to 7');
-        assert.deepEqual(linkedList.toArray(), [1,7]);
+        assert.deepEqual(linkedList.toArray(), [1, 7]);
     })
 });
